@@ -41,16 +41,30 @@ function handleFileSelect(evt) {
 
   if (!file) return;
 
-  var reader = new FileReader();
+  var reader = new XMLHttpRequest();
+  reader.open("GET", "/myfile.png", true);
+  reader.responseType = "arraybuffer";
+  reader.onload = (event) => {
+    const arrayBuffer = req.response; // Note: not req.responseText
+    if (arrayBuffer) {
+      const byteArray = new Uint8Array(arrayBuffer);
+      reader.send(byterArray);
+      // byteArray.forEach((element, index) => {
+      //   // do something with each byte in the array
+      // });
+    }
+  };
+  
 
-  reader.onload = (function (theFile) {
-    return function (e) {
-      file1 = e.target.result;
-      evt.target.data = file1;
-    };
-  })(file);
+  // reader.onload = (function (theFile) {
+  //   return function (e) {
+  //     file1 = e.target.result;
+  //     evt.target.data = file1;
+  //   };
+  // })(file);
 
-  reader.readAsBinaryString(file);
+ // reader.readAsBinaryString(file);
+ 
 }
 
 let espLoaderTerminal = {
